@@ -19,7 +19,8 @@ def load_sample(url):
 def make_dataset(cfg):
     if cfg.img_dirs:
         _datasets = []
-        for img_dir in cfg.img_dirs:
+        for i in range(cfg.img_dirs.count):
+            img_dir = cfg.img_dirs[str(i)]
             extensions=tuple(img_dir.extensions)
             for transform_id in img_dir.transform_ids:
                 transform=get_transform_with_id(transform_id,size=cfg.resolution)
