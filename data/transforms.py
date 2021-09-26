@@ -44,24 +44,24 @@ def get_transform_with_id(transform_id, size):
         ])
     elif transform_id == "transform_flip":
         return Compose([
-            Resize(IMAGE_SIZE),
-            CenterCrop(IMAGE_SIZE),
+            Resize(size),
+            CenterCrop(size),
             RandomHorizontalFlip(p=1.0),
             ToTensor(),
             Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
         ])
     elif transform_id == "transform_hue":
         return Compose([
-            Resize(IMAGE_SIZE),
-            CenterCrop(IMAGE_SIZE),
+            Resize(size),
+            CenterCrop(size),
             ColorJitter(hue=0.5),
             ToTensor(),
             Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
         ])
     elif transform_id == "transform_hue_flip":
         return Compose([
-            Resize(IMAGE_SIZE),
-            CenterCrop(IMAGE_SIZE),
+            Resize(size),
+            CenterCrop(size),
             ColorJitter(hue=0.5),
             RandomHorizontalFlip(p=1.0),
             ToTensor(),
@@ -69,10 +69,10 @@ def get_transform_with_id(transform_id, size):
         ])
     elif transform_id == "transform_ppile":
         return Compose([
-            Resize(IMAGE_SIZE),
-            CenterCrop(IMAGE_SIZE),
+            Resize(size),
+            CenterCrop(size),
             RandomRotation(30, fill=(255,255,255)),
-            RandomAffine(0, translate=(5/IMAGE_SIZE, 5/IMAGE_SIZE),
+            RandomAffine(0, translate=(5/size, 5/size),
                          fill=(255,255,255)),
             ColorJitter(hue=0.5),
             RandomHorizontalFlip(p=0.5),
