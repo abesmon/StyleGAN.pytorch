@@ -16,6 +16,10 @@ from PIL import Image
 def load_sample(url):
     return Image.open(url).convert('RGB')
 
+class _DatasetFolder(DatasetFolder):
+    def __getitem__(self, item):
+        return super().__getitem__(item)[0]
+
 def make_dataset(cfg):
     if cfg.img_dirs:
         _datasets = []
@@ -24,7 +28,7 @@ def make_dataset(cfg):
             extensions=tuple(img_dir.extensions)
             for transform_id in img_dir.transform_ids:
                 transform=get_transform_with_id(transform_id,size=cfg.resolution)
-                _datasets.append(DatasetFolder(img_dir.path, load_sample,
+                _datasets.append(_DatasetFolder(img_dir.path, load_sample,
                                                extensions=extensions,
                                                transform=transform))
         return ConcatDataset(_datasets)
