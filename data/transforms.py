@@ -31,3 +31,53 @@ def get_transform(new_size=None):
             Normalize(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5))
         ])
     return image_transform
+
+def get_transform_with_id(transform_id, size):
+    if transform_id == "transform":
+        return transforms.Compose(
+            [
+                transforms.Resize(size),
+                transforms.CenterCrop(size),
+                transforms.ToTensor(),
+                transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+            ])
+    elif transform_id == "transform_flip":
+        return transforms.Compose(
+            [
+                transforms.Resize(IMAGE_SIZE),
+                transforms.CenterCrop(IMAGE_SIZE),
+                transforms.RandomHorizontalFlip(p=1.0),
+                transforms.ToTensor(),
+                transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+            ])
+    elif transform_id == "transform_hue":
+        return transforms.Compose(
+            [
+                transforms.Resize(IMAGE_SIZE),
+                transforms.CenterCrop(IMAGE_SIZE),
+                transforms.ColorJitter(hue=0.5),
+                transforms.ToTensor(),
+                transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+            ])
+    elif transform_id == "transform_hue_flip":
+        return transforms.Compose(
+            [
+                transforms.Resize(IMAGE_SIZE),
+                transforms.CenterCrop(IMAGE_SIZE),
+                transforms.ColorJitter(hue=0.5),
+                transforms.RandomHorizontalFlip(p=1.0),
+                transforms.ToTensor(),
+                transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+            ])
+    elif transform_id == "transform_ppile":
+        return transforms.Compose([
+            transforms.Resize(IMAGE_SIZE),
+            transforms.CenterCrop(IMAGE_SIZE),
+            transforms.RandomRotation(30, fill=(255,255,255)),
+            transforms.RandomAffine(0, translate=(5/IMAGE_SIZE, 5/IMAGE_SIZE),
+                                    fill=(255,255,255)),
+            transforms.ColorJitter(hue=0.5),
+            transforms.RandomHorizontalFlip(p=0.5),
+            transforms.ToTensor(),
+            transforms.Normalize((0.5, 0.5, 0.5,), (0.5, 0.5, 0.5,))
+        ])

@@ -8,11 +8,26 @@
 """
 
 from data.datasets import FlatDirectoryImageDataset, FoldersDistributedDataset
-from data.transforms import get_transform
+from data.transforms import get_transform, get_transform_with_id
+from torchvision.datasets import DatasetFolder
+from torch.utils.data import ConcatDataset
+from PIL import Image
 
+def load_sample(url):
+    return Image.open(url).convert('RGB')
 
 def make_dataset(cfg):
-    if cfg.folder:
+    if cfg.img_dirs:
+        _datasets = []
+        for img_dir in cfg.img_dirs:
+            extensions=tuple(img_dir.extensions)
+            for transform_id in img_dir.transform_ids:
+                transform=get_transform_with_id(transform_id,size=cfg.resolution)
+                _datasets.append(DatasetFolder(img_dir.path, load_sample,
+                                               extensions=extensions,
+                                               transform=transform))
+        return ConcatDataset(_datasets)
+    elif cfg.folder:
         Dataset = FoldersDistributedDataset
     else:
         Dataset = FlatDirectoryImageDataset

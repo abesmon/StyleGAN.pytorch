@@ -48,6 +48,7 @@ cfg.sched.fade_in_percentage = [50, 50, 50, 50, 50, 50, 50, 50, 50]
 # ---------------------------------------------------------------------------- #
 cfg.dataset = CN()
 cfg.dataset.img_dir = ""
+cfg.dataset.img_dirs = []
 cfg.dataset.folder = True
 cfg.dataset.resolution = 128
 cfg.dataset.channels = 3
