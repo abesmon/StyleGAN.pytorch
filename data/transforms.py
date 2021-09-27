@@ -13,11 +13,11 @@ from PIL import Image as PImage
 import random
 
 class RescaleSQR(object):
-    def __init__(self, output_size, fill_color=(0, 0, 0)):
+    def __init__(self, output_size, fill_color=(255, 255, 255)):
         self.fill_color = fill_color
         self.output_size = output_size
 
-    def __make_square(self, im, min_size=256, fill_color=(0, 0, 0)):
+    def __make_square(self, im, min_size=256, fill_color=(255, 255, 255)):
         im_x, im_y = im.size
 
         largest_side = max(im_x, im_y)
