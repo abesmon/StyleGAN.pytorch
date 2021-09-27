@@ -10,6 +10,7 @@
 from torchvision.transforms import ToTensor, Normalize, Compose, Resize, RandomHorizontalFlip
 from torchvision.transforms import CenterCrop, ColorJitter, RandomRotation, RandomAffine
 from PIL import Image as PImage
+import random
 
 class RescaleSQR(object):
     def __init__(self, output_size, fill_color=(0, 0, 0)):
