@@ -677,8 +677,8 @@ class StyleGAN:
 
                         # create a grid of samples and save it
                         os.makedirs(os.path.join(output, 'samples'), exist_ok=True)
-                        gen_img_file = os.path.join(output, 'samples', "gen_" + str(current_depth)
-                                                    + "_" + str(epoch) + "_" + str(i) + ".png")
+                        gen_img_file = os.path.join(output, 'samples', "gen_" + f"{current_depth}"
+                                                    + "_" + f"{epoch:03d}" + "_" + f"{i:04d}" + ".png")
 
                         with torch.no_grad():
                             self.create_grid(
@@ -700,12 +700,15 @@ class StyleGAN:
                 if epoch % checkpoint_factor == 0 or epoch == 1 or epoch == epochs[current_depth]:
                     save_dir = os.path.join(output, 'models')
                     os.makedirs(save_dir, exist_ok=True)
-                    gen_save_file = os.path.join(save_dir, "GAN_GEN_" + str(current_depth) + "_" + str(epoch) + ".pth")
-                    dis_save_file = os.path.join(save_dir, "GAN_DIS_" + str(current_depth) + "_" + str(epoch) + ".pth")
+                    depth_str = f"{current_depth}"
+                    epoch_str = f"{epoch:03d}"
+
+                    gen_save_file = os.path.join(save_dir, "GAN_" + depth_str + "_" + epoch_str + "_GEN.pth")
+                    dis_save_file = os.path.join(save_dir, "GAN_" + depth_str + "_" + epoch_str + "_DIS.pth")
                     gen_optim_save_file = os.path.join(
-                        save_dir, "GAN_GEN_OPTIM_" + str(current_depth) + "_" + str(epoch) + ".pth")
+                        save_dir, "GAN_" + depth_str + "_" + epoch_str + "_GEN_OPTIM.pth")
                     dis_optim_save_file = os.path.join(
-                        save_dir, "GAN_DIS_OPTIM_" + str(current_depth) + "_" + str(epoch) + ".pth")
+                        save_dir, "GAN_" + depth_str + "_" + epoch_str + "_DIS_OPTIM.pth")
 
                     torch.save(self.gen.state_dict(), gen_save_file)
                     logger.info("Saving the model to: %s\n" % gen_save_file)
@@ -716,7 +719,7 @@ class StyleGAN:
                     # also save the shadow generator if use_ema is True
                     if self.use_ema:
                         gen_shadow_save_file = os.path.join(
-                            save_dir, "GAN_GEN_SHADOW_" + str(current_depth) + "_" + str(epoch) + ".pth")
+                            save_dir, "GAN_" + depth_str + "_" + epoch_str + "_GEN_SHADOW.pth")
                         torch.save(self.gen_shadow.state_dict(), gen_shadow_save_file)
                         logger.info("Saving the model to: %s\n" % gen_shadow_save_file)
 
